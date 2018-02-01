@@ -7,25 +7,29 @@ output:
   pdf_document: default
 ---
 
-In this script the basic operations are described and explained. The basic syntax of R is developed around "," (comma) seperations and "()" (bracket) grouping. In general the syntax (grammar of programming language) is similar to 
+In this script the basic operations are described and explained. The basic syntax of R is developed around "," (comma) separations and "()" (bracket) grouping. In general the syntax (grammar of programming language) is similar to 
 ```{r}
 object <- function(parameter1, vector2, dataframe3)
 ```
 
-In which is an object is the "thing" in which results can be stored, the function is something by which the information is processed (usually relates to a library), a parameter which is this case is a value, a vector which is the same as a variable (a sequence of values) and a dataframe which is identical to a flat-table (just like a sheet in excel is). Good to know is that R has simmplified datastructures that are all compatable with each other. 
+In which is an object is the "thing" in which results can be stored, the function is something by which the information is processed (usually relates to a library), a parameter which is this case is a value, a vector which is the same as a variable (a sequence of values) and a data frame which is identical to a flat-table (just like a sheet in excel is). Good to know is that R has simplified data structures that are all comparable with each other. 
 
-In the next part we intend do a simple linear regression on a dataset and retrieve the basic results from object that was created. The object is a list, which is diffrent from values, vectors and dataframes. A list is an unstructered, hierachical object that can store anything. The advantage is that it except any and all information. The disadvantage is that it can therefore contain non-sensisical data more easily. E.g. a list can store 2 values in one entry. A value, vector or dataframe cannot do this. 
+In the next part we intend do a simple linear regression on a dataset and retrieve the basic results from object that was created. The object is a list, which is different from values, vectors and data frames. A list is an unstructured, hierarchical object that can store anything. The advantage is that it accepts any and all information. The disadvantage is that it can therefore contain non-nonsensical data more easily. E.g. a list can store 2 values in one entry. A value, vector or data frame cannot do this. 
 
 The syntax for the linear regression is:
 ```{r}
-object <- (dependent_variable~, beta1, beta2, beta3)
+object <- (dependent_variable~ beta1 + beta2 + beta3, data=relevant_dataframe)
 ```
 In order to read the list, make sure you use the print function as denoted below.
 ```{r}
 print(object)
 ```
-Note that a list is hierachical and often contains many layers in which sublists are stored. Subsetting these lists is conducted with square brackets ("[]"). If you would subset the third sublist, and then the first sublist of that sublist, this would be denoted as follows:
+Note that a list is hierarchical and often contains many layers in which sublists are stored. Sub-setting these lists is conducted with square brackets ("[]"). If you would subset the third sublist, and then the first sublist of that sublist, this would be denoted as follows:
 ```{r}
 print(object[3][1])
 ```
-In order to give a heads start, the code below already loads the data into the object "dataset_1". Use the command head(object) to read the first 10 lines of the data and identify the relevant columns. By reading the labels, identify the relevant columns for the mode and create the model. Try to get a print out of the model 
+Use the command head(object) to read the first 10 lines of the iris and identify the relevant columns. Please create a model that uses Sepal.Length as depedent variable and Sepal.width, Petal.Length, Petal.Width as independent variables. Note that that R is CaSe SeNsItIvE. 
+
+ANSWER: object1 <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, data=iris)
+
+summary provides nice output, maybe they should also try a list method.
