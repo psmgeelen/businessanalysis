@@ -1,0 +1,97 @@
+---
+title: "Data Patterns"
+output:
+  html_notebook
+    
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+
+This section covers sessions 1-2, chapters 2-3 of HW.
+Covered topics:<br>
+- getting data into R <br>
+- making a time series <br>
+- exploring autocorrelation <br>
+- how to do formulas from p.41-42 of HW <br>
+- naive forecasting method <br>
+- moving averages <br>
+- exponential smoothing <br>
+- Holt's linear smoothing <br>
+- Winter's method <br>
+- Winters-Holt <br>
+
+<h3>Load Data into R and transform to Time Series</h3>
+First, set your working directory to wherever your excel file is, otherwise you'll have to type in the complete file path.Also save your R project and your R script there.<br>
+![](figures/exploringdatapatterns_setworkdir.png)
+ 
+
+Now you need to create an object and read the data from an excel file. If you typed the values from the book, type them as one series (one column). If you are using someone's file, transform them to one column. You don't need the years and quarters.Here is how my excel file looks after transforming: <br>
+![](figures/exploringdatapatterns_excelfile.png)
+
+There are two tabs in the file and I concatenated the Year+Quarter. Now we want to import the data from Sheet1 to R.
+```{r}
+#For this, we use the package readxl and its function read_excel
+#first, apply the function to the file
+#create an object called firstdata0 and apply the function to it
+#we have to specify the file name. This argument is a string, therefore use quotation marks ""
+firstdata0 <- readxl::read_excel("first session.xlsx")
+firstdata0
+```
+Clearly that's not what we want. Our goal is to get the time series in a friendly form.
+
+
+```{r}
+#remove firstdata0
+remove(firstdata0)
+#add some inputs to the function
+#We additionally specify the file name, which sheet to take the data from, and the range. Why the range? I only want to get the first column.
+firstdata <- readxl::read_excel("first session.xlsx", sheet='Sheet1', range = "A1:A48")
+#this displays the first five entries
+head(firstdata, n=5)
+```
+
+Now the data is loaded into R. Let's check what object type we have
+```{r}
+str(firstdata)
+```
+This is a data frame. We however want a timeseries because then we can use a number of specific functions.
+```{r}
+#to make a time series, create a new object and apply the ts function to it like this:
+series <- ts(firstdata$Series, frequency=4, start=1988)
+#as you can see, we defined the frequency of observations as 4 per year and the starting year as 1988. 
+#let's display the object
+series
+```
+
+Let's plot our series.
+```{r}
+#we use a generic plot function, there are many more.
+#we use type = "p" for points in the scatterplot. Other types are available, use Help in Rstudio(F1) to find out more.
+#main is the title of the plot
+plot(series, type="p",main="First plot")
+
+
+```
+
+<h3> Autocorrelation </h3>
+
+To do this, we use the acf function from the stats package, which is pre-loaded.
+```{r}
+#first, we specify the series, then we want to first look at the ACF, then we want to see it plotted. All until lag 10.
+acf(series, plot=FALSE, lag.max =10)
+acf(series, plot=TRUE, lag.max=10)
+```
+

@@ -1,0 +1,122 @@
+---
+title: "First steps"
+output: html_notebook
+---
+
+Hello everyone.This document shows how to painlessly install and use R.
+
+Additional, better written tutorials:
+
+UCLA tutorial on Rstudio:
+http://web.cs.ucla.edu/~gulzar/rstudio/basic-tutorial.html
+We recommend you use this if anything below is unclear :)
+
+
+Intro to R from Harvard
+http://tutorials.iq.harvard.edu/R/Rintro/Rintro.html
+
+Directory with various tutorials: http://tutorials.iq.harvard.edu/R/
+
+
+
+
+First the installation.
+
+To Install R:
+go to www.r-project.org.
+Click the "download R" link in the middle of the page under "Getting Started."
+Select a CRAN location (a mirror site) and click the corresponding link.  
+Click on the "Download R for Windows" link at the top of the page.  
+Click on the "install R for the first time" link at the top of the page.
+Click "Download R for Windows" and save the file on your computer.  Run the file and follow the installation instructions.  
+
+
+
+
+Install Rstudio.
+
+RStudio is a development environment which makes your life considerably easier. 
+
+Head to https://www.rstudio.com/products/rstudio/download/#download and download the free version.
+
+
+RStudio interface:
+
+You open Rstudio and that's what you see on the left: 
+![](figures/console.png)
+This is the console.  Type anything in it, hit enter, it tries to execute.
+
+Try typing the code below into it:
+
+
+```{r}
+1+1
+
+str(cars)
+#shows some info about one of the pre-loaded datasets - cars
+plot(cars)
+#makes a scatterplot of the dataset
+```
+
+However, we don't work with the console. Instead, you'll create script files which you can edit afterwards.
+
+First, let's create a new project (file/new project/new directory/new R project). This creates a working environment which is associated with a working directory. What's a working directory? A folder on your computer R is pointed to by default. When you want to get data from a file, you just need the filename. Let's see how it looks like:
+
+```{r}
+getwd()
+#this outputs the current working directory
+firstdata0 <- readxl::read_excel("first session.xlsx")
+# this gets the data from the file into an object called firstdata0. more about that later. 
+str(firstdata0)
+#some info about the data we got.
+
+```
+
+Now that you have a project, create a new R script file (same menu as the project). You can write and run code from these files.
+
+To the right, there are two areas: environment (..) and files(..)
+![](figures/environment.png)
+You will see all the objects you create here. Notice the button "import dataset" in the top right. In the example above, we use a function to get data from an excel file, but you can get it through a visual window as well. 
+You can also save and open your workspace - the stuff you created.
+
+![](figures/workdir.png)
+This is a file explorer that defaults to your working directory. If you want to change the directory, navigate through it, click on the cog and "set as working directory." There are also several tabs, plots, packages etc. 
+
+Plots: self-explanatory. This is where the graphical outputs that you create will show and you can scroll through them.
+
+<h3> Packages: </h3>
+
+Packages are reusable units of R code. They include functions, documentation and sample data. They allow you to do most of the things you need in this course by simply calling functions. 
+R has many packages pre-installed, you will see a long list in the tab. Whenever additional packages are needed, there are two easy ways to install them:
+either search in the search box 
+![](figures/sbox.png)
+
+or install.packages("packagename") function. Notice the quotation marks. Example below:
+
+```{r}
+install.packages("ggplot2")
+```
+
+Installed packages are not loaded automatically at the beginning of a new session / document. You need to load them, like this:
+
+use the function library("packagename")
+example:
+```{r}
+library("ggplot2")
+```
+or just check the checkbox in your package list.
+
+
+Next is the <help> tab. Hit F1 when your cursor is on a function or package to get detailed info about it.
+
+![](figures/acf.png)
+here's part of the help for the autocorrelation function (in later tutorials). Everything you can pass to the function is described in detail!
+
+
+Finally there's the viewer pane, ignore it.(  explanation: https://support.rstudio.com/hc/en-us/articles/202133558-Extending-RStudio-with-the-Viewer-Pane)
+
+
+
+So that's a super brief intro to Rstudio interface.
+
+
