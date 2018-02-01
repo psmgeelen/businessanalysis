@@ -1,5 +1,5 @@
 ---
-title: "R Notebook"
+title: "R Basics for Business Analysis"
 output:
   html_document:
     df_print: paged
@@ -7,9 +7,11 @@ output:
   pdf_document: default
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
-
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+In this script the basic operations are described and explained. The basic syntax of R is developed around "," (comma) seperations and "()" (bracket) grouping. In general the syntax (grammar of programming language) is similar to 
+```{r}
+object <- function(parameter1, vector2, dataframe3)
+```
+In which is an object is the "thing" in which results can be stored, the function is something by which the information is processed (usually relates to a library), a parameter which is this case is a value, a vector which is the same as a variable (a sequence of values) and a dataframe which is identical to a flat-table (just like a sheet in excel is). Good to know is that R has simmplified datastructures that are all compatable with each other. 
 
 ```{r}
 plot(cars)
