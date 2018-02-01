@@ -1,9 +1,9 @@
 ---
 title: "R Basics for Business Analysis"
 output:
+  html_notebook: default
   html_document:
     df_print: paged
-  html_notebook: default
   pdf_document: default
 ---
 
@@ -11,14 +11,21 @@ In this script the basic operations are described and explained. The basic synta
 ```{r}
 object <- function(parameter1, vector2, dataframe3)
 ```
+
 In which is an object is the "thing" in which results can be stored, the function is something by which the information is processed (usually relates to a library), a parameter which is this case is a value, a vector which is the same as a variable (a sequence of values) and a dataframe which is identical to a flat-table (just like a sheet in excel is). Good to know is that R has simmplified datastructures that are all compatable with each other. 
 
+In the next part we intend do a simple linear regression on a dataset and retrieve the basic results from object that was created. The object is a list, which is diffrent from values, vectors and dataframes. A list is an unstructered, hierachical object that can store anything. The advantage is that it except any and all information. The disadvantage is that it can therefore contain non-sensisical data more easily. E.g. a list can store 2 values in one entry. A value, vector or dataframe cannot do this. 
+
+The syntax for the linear regression is:
 ```{r}
-plot(cars)
+object <- (dependent_variable~, beta1, beta2, beta3)
 ```
-
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
-
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
-
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+In order to read the list, make sure you use the print function as denoted below.
+```{r}
+print(object)
+```
+Note that a list is hierachical and often contains many layers in which sublists are stored. Subsetting these lists is conducted with square brackets ("[]"). If you would subset the third sublist, and then the first sublist of that sublist, this would be denoted as follows:
+```{r}
+print(object[3][1])
+```
+In order to give a heads start, the code below already loads the data into the object "dataset_1". Use the command head(object) to read the first 10 lines of the data and identify the relevant columns. By reading the labels, identify the relevant columns for the mode and create the model. Try to get a print out of the model 

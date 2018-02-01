@@ -182,19 +182,35 @@ $(document).ready(function () {
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>In which is an object is the “thing” in which results can be stored, the function is something by which the information is processed (usually relates to a library), a parameter which is this case is a value, a vector which is the same as a variable (a sequence of values) and a dataframe which is identical to a flat-table (just like a sheet in excel is). Good to know is that R has simmplified datastructures that are all compatable with each other.</p>
+<p>In the next part we intend do a simple linear regression on a dataset and retrieve the basic results from object that was created. The object is a list, which is diffrent from values, vectors and dataframes. A list is an unstructered, hierachical object that can store anything. The advantage is that it except any and all information. The disadvantage is that it can therefore contain non-sensisical data more easily. E.g. a list can store 2 values in one entry. A value, vector or dataframe cannot do this.</p>
+<p>The syntax for the linear regression is:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdChjYXJzKVxuYGBgIn0= -->
-<pre class="r"><code>plot(cars)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxub2JqZWN0IDwtIChkZXBlbmRlbnRfdmFyaWFibGV+LCBiZXRhMSwgYmV0YTIsIGJldGEzKVxuYGBgIn0= -->
+<pre class="r"><code>object &lt;- (dependent_variable~, beta1, beta2, beta3)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
-<p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Ctrl+Shift+K</em> to preview the HTML file).</p>
-<p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>
+<p>In order to read the list, make sure you use the print function as denoted below.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQob2JqZWN0KVxuYGBgIn0= -->
+<pre class="r"><code>print(object)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Note that a list is hierachical and often contains many layers in which sublists are stored. Subsetting these lists is conducted with square brackets (“[]”). If you would subset the third sublist, and then the first sublist of that sublist, this would be denoted as follows:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQob2JqZWN0WzNdWzFdKVxuYGBgIn0= -->
+<pre class="r"><code>print(object[3][1])</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>In order to give a heads start, the code below already loads the data into the object “dataset_1”. Use the command head(object) to read the first 10 lines of the data and identify the relevant columns. By reading the labels, identify the relevant columns for the mode and create the model. Try to get a print out of the model</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBCYXNpY3MgZm9yIEJ1c2luZXNzIEFuYWx5c2lzIgpvdXRwdXQ6CiAgaHRtbF9kb2N1bWVudDoKICAgIGRmX3ByaW50OiBwYWdlZAogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQKICBwZGZfZG9jdW1lbnQ6IGRlZmF1bHQKLS0tCgpJbiB0aGlzIHNjcmlwdCB0aGUgYmFzaWMgb3BlcmF0aW9ucyBhcmUgZGVzY3JpYmVkIGFuZCBleHBsYWluZWQuIFRoZSBiYXNpYyBzeW50YXggb2YgUiBpcyBkZXZlbG9wZWQgYXJvdW5kICIsIiAoY29tbWEpIHNlcGVyYXRpb25zIGFuZCAiKCkiIChicmFja2V0KSBncm91cGluZy4gSW4gZ2VuZXJhbCB0aGUgc3ludGF4IChncmFtbWFyIG9mIHByb2dyYW1taW5nIGxhbmd1YWdlKSBpcyBzaW1pbGFyIHRvIApgYGB7cn0Kb2JqZWN0IDwtIGZ1bmN0aW9uKHBhcmFtZXRlcjEsIHZlY3RvcjIsIGRhdGFmcmFtZTMpCmBgYApJbiB3aGljaCBpcyBhbiBvYmplY3QgaXMgdGhlICJ0aGluZyIgaW4gd2hpY2ggcmVzdWx0cyBjYW4gYmUgc3RvcmVkLCB0aGUgZnVuY3Rpb24gaXMgc29tZXRoaW5nIGJ5IHdoaWNoIHRoZSBpbmZvcm1hdGlvbiBpcyBwcm9jZXNzZWQgKHVzdWFsbHkgcmVsYXRlcyB0byBhIGxpYnJhcnkpLCBhIHBhcmFtZXRlciB3aGljaCBpcyB0aGlzIGNhc2UgaXMgYSB2YWx1ZSwgYSB2ZWN0b3Igd2hpY2ggaXMgdGhlIHNhbWUgYXMgYSB2YXJpYWJsZSAoYSBzZXF1ZW5jZSBvZiB2YWx1ZXMpIGFuZCBhIGRhdGFmcmFtZSB3aGljaCBpcyBpZGVudGljYWwgdG8gYSBmbGF0LXRhYmxlIChqdXN0IGxpa2UgYSBzaGVldCBpbiBleGNlbCBpcykuIEdvb2QgdG8ga25vdyBpcyB0aGF0IFIgaGFzIHNpbW1wbGlmaWVkIGRhdGFzdHJ1Y3R1cmVzIHRoYXQgYXJlIGFsbCBjb21wYXRhYmxlIHdpdGggZWFjaCBvdGhlci4gCgpgYGB7cn0KcGxvdChjYXJzKQpgYGAKCkFkZCBhIG5ldyBjaHVuayBieSBjbGlja2luZyB0aGUgKkluc2VydCBDaHVuayogYnV0dG9uIG9uIHRoZSB0b29sYmFyIG9yIGJ5IHByZXNzaW5nICpDdHJsK0FsdCtJKi4KCldoZW4geW91IHNhdmUgdGhlIG5vdGVib29rLCBhbiBIVE1MIGZpbGUgY29udGFpbmluZyB0aGUgY29kZSBhbmQgb3V0cHV0IHdpbGwgYmUgc2F2ZWQgYWxvbmdzaWRlIGl0IChjbGljayB0aGUgKlByZXZpZXcqIGJ1dHRvbiBvciBwcmVzcyAqQ3RybCtTaGlmdCtLKiB0byBwcmV2aWV3IHRoZSBIVE1MIGZpbGUpLgoKVGhlIHByZXZpZXcgc2hvd3MgeW91IGEgcmVuZGVyZWQgSFRNTCBjb3B5IG9mIHRoZSBjb250ZW50cyBvZiB0aGUgZWRpdG9yLiBDb25zZXF1ZW50bHksIHVubGlrZSAqS25pdCosICpQcmV2aWV3KiBkb2VzIG5vdCBydW4gYW55IFIgY29kZSBjaHVua3MuIEluc3RlYWQsIHRoZSBvdXRwdXQgb2YgdGhlIGNodW5rIHdoZW4gaXQgd2FzIGxhc3QgcnVuIGluIHRoZSBlZGl0b3IgaXMgZGlzcGxheWVkLgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBCYXNpY3MgZm9yIEJ1c2luZXNzIEFuYWx5c2lzIgpvdXRwdXQ6CiAgaHRtbF9ub3RlYm9vazogZGVmYXVsdAogIGh0bWxfZG9jdW1lbnQ6CiAgICBkZl9wcmludDogcGFnZWQKICBwZGZfZG9jdW1lbnQ6IGRlZmF1bHQKLS0tCgpJbiB0aGlzIHNjcmlwdCB0aGUgYmFzaWMgb3BlcmF0aW9ucyBhcmUgZGVzY3JpYmVkIGFuZCBleHBsYWluZWQuIFRoZSBiYXNpYyBzeW50YXggb2YgUiBpcyBkZXZlbG9wZWQgYXJvdW5kICIsIiAoY29tbWEpIHNlcGVyYXRpb25zIGFuZCAiKCkiIChicmFja2V0KSBncm91cGluZy4gSW4gZ2VuZXJhbCB0aGUgc3ludGF4IChncmFtbWFyIG9mIHByb2dyYW1taW5nIGxhbmd1YWdlKSBpcyBzaW1pbGFyIHRvIApgYGB7cn0Kb2JqZWN0IDwtIGZ1bmN0aW9uKHBhcmFtZXRlcjEsIHZlY3RvcjIsIGRhdGFmcmFtZTMpCmBgYAoKSW4gd2hpY2ggaXMgYW4gb2JqZWN0IGlzIHRoZSAidGhpbmciIGluIHdoaWNoIHJlc3VsdHMgY2FuIGJlIHN0b3JlZCwgdGhlIGZ1bmN0aW9uIGlzIHNvbWV0aGluZyBieSB3aGljaCB0aGUgaW5mb3JtYXRpb24gaXMgcHJvY2Vzc2VkICh1c3VhbGx5IHJlbGF0ZXMgdG8gYSBsaWJyYXJ5KSwgYSBwYXJhbWV0ZXIgd2hpY2ggaXMgdGhpcyBjYXNlIGlzIGEgdmFsdWUsIGEgdmVjdG9yIHdoaWNoIGlzIHRoZSBzYW1lIGFzIGEgdmFyaWFibGUgKGEgc2VxdWVuY2Ugb2YgdmFsdWVzKSBhbmQgYSBkYXRhZnJhbWUgd2hpY2ggaXMgaWRlbnRpY2FsIHRvIGEgZmxhdC10YWJsZSAoanVzdCBsaWtlIGEgc2hlZXQgaW4gZXhjZWwgaXMpLiBHb29kIHRvIGtub3cgaXMgdGhhdCBSIGhhcyBzaW1tcGxpZmllZCBkYXRhc3RydWN0dXJlcyB0aGF0IGFyZSBhbGwgY29tcGF0YWJsZSB3aXRoIGVhY2ggb3RoZXIuIAoKSW4gdGhlIG5leHQgcGFydCB3ZSBpbnRlbmQgZG8gYSBzaW1wbGUgbGluZWFyIHJlZ3Jlc3Npb24gb24gYSBkYXRhc2V0IGFuZCByZXRyaWV2ZSB0aGUgYmFzaWMgcmVzdWx0cyBmcm9tIG9iamVjdCB0aGF0IHdhcyBjcmVhdGVkLiBUaGUgb2JqZWN0IGlzIGEgbGlzdCwgd2hpY2ggaXMgZGlmZnJlbnQgZnJvbSB2YWx1ZXMsIHZlY3RvcnMgYW5kIGRhdGFmcmFtZXMuIEEgbGlzdCBpcyBhbiB1bnN0cnVjdGVyZWQsIGhpZXJhY2hpY2FsIG9iamVjdCB0aGF0IGNhbiBzdG9yZSBhbnl0aGluZy4gVGhlIGFkdmFudGFnZSBpcyB0aGF0IGl0IGV4Y2VwdCBhbnkgYW5kIGFsbCBpbmZvcm1hdGlvbi4gVGhlIGRpc2FkdmFudGFnZSBpcyB0aGF0IGl0IGNhbiB0aGVyZWZvcmUgY29udGFpbiBub24tc2Vuc2lzaWNhbCBkYXRhIG1vcmUgZWFzaWx5LiBFLmcuIGEgbGlzdCBjYW4gc3RvcmUgMiB2YWx1ZXMgaW4gb25lIGVudHJ5LiBBIHZhbHVlLCB2ZWN0b3Igb3IgZGF0YWZyYW1lIGNhbm5vdCBkbyB0aGlzLiAKClRoZSBzeW50YXggZm9yIHRoZSBsaW5lYXIgcmVncmVzc2lvbiBpczoKYGBge3J9Cm9iamVjdCA8LSAoZGVwZW5kZW50X3ZhcmlhYmxlfiwgYmV0YTEsIGJldGEyLCBiZXRhMykKYGBgCkluIG9yZGVyIHRvIHJlYWQgdGhlIGxpc3QsIG1ha2Ugc3VyZSB5b3UgdXNlIHRoZSBwcmludCBmdW5jdGlvbiBhcyBkZW5vdGVkIGJlbG93LgpgYGB7cn0KcHJpbnQob2JqZWN0KQpgYGAKTm90ZSB0aGF0IGEgbGlzdCBpcyBoaWVyYWNoaWNhbCBhbmQgb2Z0ZW4gY29udGFpbnMgbWFueSBsYXllcnMgaW4gd2hpY2ggc3VibGlzdHMgYXJlIHN0b3JlZC4gU3Vic2V0dGluZyB0aGVzZSBsaXN0cyBpcyBjb25kdWN0ZWQgd2l0aCBzcXVhcmUgYnJhY2tldHMgKCJbXSIpLiBJZiB5b3Ugd291bGQgc3Vic2V0IHRoZSB0aGlyZCBzdWJsaXN0LCBhbmQgdGhlbiB0aGUgZmlyc3Qgc3VibGlzdCBvZiB0aGF0IHN1Ymxpc3QsIHRoaXMgd291bGQgYmUgZGVub3RlZCBhcyBmb2xsb3dzOgpgYGB7cn0KcHJpbnQob2JqZWN0WzNdWzFdKQpgYGAKSW4gb3JkZXIgdG8gZ2l2ZSBhIGhlYWRzIHN0YXJ0LCB0aGUgY29kZSBiZWxvdyBhbHJlYWR5IGxvYWRzIHRoZSBkYXRhIGludG8gdGhlIG9iamVjdCAiZGF0YXNldF8xIi4gVXNlIHRoZSBjb21tYW5kIGhlYWQob2JqZWN0KSB0byByZWFkIHRoZSBmaXJzdCAxMCBsaW5lcyBvZiB0aGUgZGF0YSBhbmQgaWRlbnRpZnkgdGhlIHJlbGV2YW50IGNvbHVtbnMuIEJ5IHJlYWRpbmcgdGhlIGxhYmVscywgaWRlbnRpZnkgdGhlIHJlbGV2YW50IGNvbHVtbnMgZm9yIHRoZSBtb2RlIGFuZCBjcmVhdGUgdGhlIG1vZGVsLiBUcnkgdG8gZ2V0IGEgcHJpbnQgb3V0IG9mIHRoZSBtb2RlbCA=</div>
 
 
 
