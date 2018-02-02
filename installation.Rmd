@@ -1,6 +1,9 @@
 ---
 title: "First steps"
-output: html_notebook
+output:
+  html_notebook: default
+  html_document: default
+  pdf_document: default
 ---
 
 Hello everyone.This document shows how to painlessly install and use R.

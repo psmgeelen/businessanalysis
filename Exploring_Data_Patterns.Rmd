@@ -1,8 +1,8 @@
 ---
 title: "Data Patterns"
 output:
-  pdf_document: default
   html_notebook: default
+  pdf_document: default
 ---
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
@@ -71,6 +71,7 @@ This is a data frame. We however want a timeseries because then we can use a num
 ```{r}
 #to make a time series, create a new object and apply the ts function to it like this:
 series <- ts(firstdata$Series, frequency=4, start=1988)
+series_df <- data.frame(series_1 = c(series), time = c(time(series)))
 #as you can see, we defined the frequency of observations as 4 per year and the starting year as 1988. 
 #let's display the object
 series
@@ -91,7 +92,8 @@ plot(series, type="p",main="First plot")
 To do this, we use the acf function from the stats package, which is pre-loaded.
 ```{r}
 #first, we specify the series, then we want to first look at the ACF, then we want to see it plotted. All until lag 10.
-acf(series, plot=FALSE, lag.max =10)
-acf(series, plot=TRUE, lag.max=10)
+acf(series_df["series_1"], plot=FALSE, lag.max =10)
+acf(series_df["series_1"], plot=TRUE, lag.max=20, xlim=c(0,20), ylab="Auto Correlogram", xlab="Lags in Years")
+
 ```
 
