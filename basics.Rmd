@@ -2,9 +2,10 @@
 title: "R Basics for Business Analysis"
 output:
   html_notebook: default
+  word_document: default
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
 ---
 
 In this script the basic operations are described and explained. The basic syntax of R is developed around "," (comma) separations and "()" (bracket) grouping. In general the syntax (grammar of programming language) is similar to 
