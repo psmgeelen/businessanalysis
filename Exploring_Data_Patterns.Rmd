@@ -4,22 +4,6 @@ output:
   html_notebook: default
   pdf_document: default
 ---
-
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
-
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
-
-```{r}
-plot(cars)
-```
-
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
-
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
-
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
-
-
 This section covers sessions 1-2, chapters 2-3 of HW.
 Covered topics:<br>
 - getting data into R <br>
@@ -71,18 +55,19 @@ This is a data frame. We however want a timeseries because then we can use a num
 ```{r}
 #to make a time series, create a new object and apply the ts function to it like this:
 series <- ts(firstdata$Series, frequency=4, start=1988)
-series_df <- data.frame(series_1 = c(series), time = c(time(series)))
 #as you can see, we defined the frequency of observations as 4 per year and the starting year as 1988. 
 #let's display the object
 series
 ```
 
-Let's plot our series.
+Let's plot a series (standard series of R-base).
 ```{r}
 #we use a generic plot function, there are many more.
 #we use type = "p" for points in the scatterplot. Other types are available, use Help in Rstudio(F1) to find out more.
 #main is the title of the plot
-plot(series, type="p",main="First plot")
+library(seasonal)
+sample_dataset <- unemp
+plot(sample_dataset, type="p",main="First plot")
 
 
 ```
@@ -91,9 +76,109 @@ plot(series, type="p",main="First plot")
 
 To do this, we use the acf function from the stats package, which is pre-loaded.
 ```{r}
-#first, we specify the series, then we want to first look at the ACF, then we want to see it plotted. All until lag 10.
-acf(series_df["series_1"], plot=FALSE, lag.max =10)
-acf(series_df["series_1"], plot=TRUE, lag.max=20, xlim=c(0,20), ylab="Auto Correlogram", xlab="Lags in Years")
+# Load packages
+library(zoo)
+library(forecast)
+# We specify the series, then we want to first look at the ACF, then we want to see it plotted. All until lag 10. Coredata is used to extract the timeseries plainly. 
+acf(coredata(sample_dataset), plot=FALSE, lag.max =10)
+acf(coredata(sample_dataset), plot=TRUE, lag.max=50, xlim=c(0,50), ylab="Auto Correlogram", xlab="Lags in Quaterlies")
 
+```
+
+For forecasting we use the "TTR" package. Make sure to load this package. For the example we will be using the dataset "austres" that is preloaded in R. Fromt here you can use the package as shown below. Note that we are using an moving average of 3. 
+
+```{r}
+library(TTR)
+simpleMA <- SMA(sample_dataset, n=3)
+plot.ts(simpleMA)
+```
+
+For decomposition of your forecast, it is important to analyse the seasonality, trend and randomness of your historic data. This can easily be done in R by calling the decompose function. 
+
+```{r}
+decomposition_of_historic_data <- decompose(sample_dataset)
+
+plot(decomposition_of_historic_data)
+```
+
+In order to create predictions we can use the HoltWinters Method. This is the most evolved version of the exponential smoothing methods. For simplicity, realize that beta and gamma can be set to zero, disabling the seasonal and/or trend component, reducing it to simpler technique.
+
+```{r}
+exp <- HoltWinters(sample_dataset, beta = 0, gamma = 0)
+exp_seasonal <- HoltWinters(sample_dataset, gamma = 0)
+exp_seasonal_trend <- HoltWinters(sample_dataset)
+
+print(exp)
+
+predictions <- exp$fitted
+head(predictions)
+
+plot(exp)
+plot(exp_seasonal)
+plot(exp_seasonal_trend)
+
+cat("SSE exp", exp$SSE, "\n", "SSE exp Seasonality", exp_seasonal$SSE, "\n", "SSE exp Seasonality and Trend", exp_seasonal_trend$SSE, "\n")
+
+```
+
+In order calculate all the performance measures for the prediction a couple of numbers need to be retrieved. The formula v = n - m relates to the R objects as n = the amoun of values, m = the amount of coefficient. v represents the residual degrees of freedom. In order to calculate everthing the following steps need to be conducted: 
+
+```{r}
+n <- length(exp$fitted)
+m <- length(exp$coefficients)
+v <- n - m 
+
+cat("With this formula we have established the values for n and m, those being", n, "and", m, "therefore we can calculate v by substraction.", "V is", v)
+
+# Calculate MSE
+
+MSE <- exp$SSE / v
+cat("MSE =", MSE)
+```
+
+
+
+In order to forecast the data for hundred periods, one can use the forecast package. The syntax works as follows:
+
+```{r}
+exp_fore <- forecast::forecast(exp, h = 100)
+exp_fore_trend_seasonal <- forecast::forecast(exp_seasonal_trend, h = 100)
+
+plot(exp_fore, main="Forecast for Exponential Smothing (basic)")
+plot(exp_fore_trend_seasonal, main = "Forecast for HoltWinters method with Trend and Seasonality")
+```
+
+<h3> Linear Regression </h3>
+
+In order to a linear regression, one needs to call the lm function. The syntax of the function is written as follows: dependent_variable ~ independent_variable_1 + independent_variable_2 + independent_variable_3. The object creates should be stored somewhere and specifics can be plotted too. For this case the dataset Iris is used. The summary function gives an overview of all the attributes of the model.
+
+```{r}
+linear_reg <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, data=iris)
+
+plot(linear_reg)
+
+summary(linear_reg)
+
+```
+
+Delayed regression
+
+```{r}
+delayed_regression <- lm(sample_dataset ~ lag(sample_dataset, k=10), data=sample_dataset)
+
+summary(delayed_regression)
+
+library(lmtest)
+library(car)
+
+# Durbin-Watson test
+cat("Durbin Watson test", "\n")
+
+dwtest(delayed_regression)
+
+cat("VIF:", vif(linear_reg), "\n")
+
+# Starmap
+influencePlot(linear_reg,	id.method="identify", main="Influence Plot", sub="Circle size is proportial to Cook's Distance" )
 ```
 
