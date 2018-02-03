@@ -1,0 +1,187 @@
+---
+title: "Regression"
+output: html_notebook
+---
+<h3> Linear Regression </h3>
+
+We do linear regression using the lm function.
+For the function, you need your regression equation, written like
+dependent_variable ~ independent_variable_1 + independent_variable_2 + independent_variable_3. 
+
+As usual, we create an object for an example. For this example, we use the iris dataset.
+The summary function gives an overview of all the attributes of the model.
+
+```{r}
+linear_reg <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species, data=iris)
+
+
+summary(linear_reg)
+
+
+```
+
+Using plot() on the object creates a number of diagnostic scatterplots 
+```{r}
+plot(linear_reg)
+```
+A correlation matrix of the variables in our LM:
+
+```{r}
+indep <- iris[,-1]
+indep <- indep[,-4] #remove the last column - species. It is categorical soo can't compute a correlation matrix.
+names(indep)
+#simply use the cor function on the matrix of variables:
+cor(indep)
+```
+We see Petal Width and Length are very strongly correlated, but let's proceed. Might also want to know the variance inflation factor(s):
+```{r}
+library(car)
+vif(linear_reg)
+```
+
+
+Look at what types of flowers we got in the iris dataset.
+```{r}
+summary(iris$Species)
+```
+
+Now plot sepal length against sepal width, but color the species. We are going to use a different package than before, ggplot2. We use the function qplot() here - it is a shortcut for quickly making graphs with the package. 
+
+```{r}
+#don't forget to load the library (install the package first!)
+library(ggplot2)
+
+qplot(x=Sepal.Width, y=Sepal.Length,
+      data=iris,
+      colour=Species,
+      shape=Species)
+
+
+```
+Function reference: http://ggplot2.tidyverse.org/reference/qplot.html
+
+Plotting it without the quickplot function - using the ggplot package 'directly':
+```{r}
+library(ggplot2)
+ggplot(
+  data=iris,
+  aes(x=Sepal.Width, y=Sepal.Length)) +
+  #aesthetics defines your graph field (axes).
+  geom_point(aes(color=Species))
+ #use pluses to add stuff (try running this function without geom_point part). We add geom_point - the dots, and color them with the Species color.
+```
+Function reference: http://ggplot2.tidyverse.org/reference/ggplot.html
+
+For this example, there's no difference, but the first function can't do more complex plots.
+
+Let's plot our prediction results.
+```{r}
+ggplot() +
+  #first we make an empty plot(above), then add our first set of points like before
+geom_point(data=iris,
+           aes(x=Sepal.Width, y=Sepal.Length),
+           colour='blue') +
+  #now we add another set of points. for y-coordinates, we use the predict function. It predicts values with the model we specify. There's an argument we can pass to it: newdata. If you specify it, it will predict the values from that data, otherwise fitted values are used (good for this case)
+geom_point(data=iris,
+           aes(x=Sepal.Width, y=predict(linear_reg)),
+           colour='red')
+
+
+
+```
+
+
+
+<h3> Dummy Variables and Plotting regressions </h3>
+
+So far we have been working with a multiple regression. We might want to be able to plot simple linear regression lines though. First, create a new regression object.
+
+```{r}
+simple_linear_reg <- lm(formula=iris$Sepal.Length~iris$Sepal.Width+iris$Species)
+summary(simple_linear_reg)
+
+```
+We have a dummy variable in this model - species. A plot of the individual regression lines for each species can show the effect of the dummy variable. 
+Two ways to do it are shown here: one with pre-built graphics of R, second with ggplot2. 
+
+```{r}
+#using normal plot
+plot(iris$Sepal.Length~iris$Sepal.Width)
+lines(iris$Sepal.Width[iris$Species=="versicolor"],fitted(simple_linear_reg)[iris$Species=="versicolor"],lwd=2,col="red")
+lines(iris$Sepal.Width[iris$Species=="virginica"],fitted(simple_linear_reg)[iris$Species=="virginica"],lwd=2,col="green")
+lines(iris$Sepal.Width[iris$Species=="setosa"],fitted(simple_linear_reg)[iris$Species=="setosa"],lwd=2,col="purple")
+
+```
+source: http://geog.uoregon.edu/GeogR/topics/dummy.html
+
+
+
+
+```{r}
+#using ggplot2
+ggplot() +
+ geom_point(data=iris,
+           aes(x=Sepal.Width, y=Sepal.Length),
+           colour='blue') +
+  
+geom_line(data=iris[iris$Species=="versicolor",],
+           aes(x=Sepal.Width, y=fitted(simple_linear_reg)[iris$Species=="versicolor"]),
+           colour='red')+
+  
+  geom_line(data=iris[iris$Species=="virginica",],
+           aes(x=Sepal.Width, y=fitted(simple_linear_reg)[iris$Species=="virginica"]),
+           colour='purple')+
+  
+    geom_line(data=iris[iris$Species=="setosa",],
+           aes(x=Sepal.Width, y=fitted(simple_linear_reg)[iris$Species=="setosa"]),
+           colour='green')
+
+#also note this ggplot version works, but isn't tidy.
+
+```
+
+
+<h3> model selection </h3>
+
+For automatic model selection, the leaps package can be used. There are other methods, but this one generates nice visual output. So first install the leaps package (preferrably from the interface.)
+
+```{r}
+
+library(leaps)
+aleaps<- regsubsets(data=iris,
+                    Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width,nbest=3)
+summary(aleaps)
+plot(aleaps, scale="adjr2")
+# by using the scale argument, select which statistic to use - r^2, adjr^2, BIC or AIC.
+#note: this might return an error if your plot area isn't large enough. To fix, just maximize RStudio.
+
+```
+
+
+
+
+<h3> Time Series Regression </h3>
+
+
+Regressing time series against it's lags:
+
+```{r}
+#let's return to our unemployment dataset from before. don't forget that we need the seasonal package for that!
+library(seasonal)
+sample_dataset <- unemp
+delayed_regression <- lm(sample_dataset ~ lag(sample_dataset, k=10), data=sample_dataset)
+
+summary(delayed_regression)
+
+library(lmtest)
+library(car)
+
+# Durbin-Watson test
+cat("Durbin Watson test", "\n")
+
+dwtest(delayed_regression)
+
+
+# Starmap. disregard this
+#influencePlot(linear_reg,	id.method="identify", main="Influence Plot", sub="Circle size is proportial to Cook's Distance" )
+```

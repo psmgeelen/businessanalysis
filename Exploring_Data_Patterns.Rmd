@@ -148,37 +148,4 @@ plot(exp_fore, main="Forecast for Exponential Smothing (basic)")
 plot(exp_fore_trend_seasonal, main = "Forecast for HoltWinters method with Trend and Seasonality")
 ```
 
-<h3> Linear Regression </h3>
-
-In order to a linear regression, one needs to call the lm function. The syntax of the function is written as follows: dependent_variable ~ independent_variable_1 + independent_variable_2 + independent_variable_3. The object creates should be stored somewhere and specifics can be plotted too. For this case the dataset Iris is used. The summary function gives an overview of all the attributes of the model.
-
-```{r}
-linear_reg <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, data=iris)
-
-plot(linear_reg)
-
-summary(linear_reg)
-
-```
-
-Delayed regression
-
-```{r}
-delayed_regression <- lm(sample_dataset ~ lag(sample_dataset, k=10), data=sample_dataset)
-
-summary(delayed_regression)
-
-library(lmtest)
-library(car)
-
-# Durbin-Watson test
-cat("Durbin Watson test", "\n")
-
-dwtest(delayed_regression)
-
-cat("VIF:", vif(linear_reg), "\n")
-
-# Starmap
-influencePlot(linear_reg,	id.method="identify", main="Influence Plot", sub="Circle size is proportial to Cook's Distance" )
-```
 
