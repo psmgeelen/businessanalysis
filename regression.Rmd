@@ -1,6 +1,10 @@
 ---
 title: "Regression"
-output: html_notebook
+output:
+  word_document: default
+  html_notebook: default
+  pdf_document: default
+  html_document: default
 ---
 <h3> Linear Regression </h3>
 
@@ -177,11 +181,28 @@ library(lmtest)
 library(car)
 
 # Durbin-Watson test
-cat("Durbin Watson test", "\n")
-
 dwtest(delayed_regression)
-
-
-# Starmap. disregard this
-#influencePlot(linear_reg,	id.method="identify", main="Influence Plot", sub="Circle size is proportial to Cook's Distance" )
 ```
+
+
+<h3> ARIMA modeling </h3>
+
+In the last section of regressions we will cover ARIMA modeling. ARIMA stands for Auto Regressive Integrated Moving Average. It therefore integrates regression concepts with moving average methods of predictions. The kewl part of the forecast package and the Arima function, is that it completely optimizes itself. The creation of the model therefore is really simple and you can call the results with the summary function as shown below. The forecast can also be mapped with the forecast function. 
+
+```{r}
+library(forecast)
+
+arima_model <- auto.arima(sample_dataset)
+
+summary(arima_model)
+```
+
+```{r}
+library(forecast)
+library(ggplot2)
+
+arima_model <- auto.arima(sample_dataset)
+plot(forecast(arima_model, h=100))
+
+```
+
