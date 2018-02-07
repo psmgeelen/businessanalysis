@@ -1,0 +1,61 @@
+---
+title: "Linear Programming 2.0"
+output: html_notebook
+---
+
+This notebook with give you a start in Linear Programming in R. Arseny and I have been working many hours to develop a workflow by which you can truly write down the functions and constraints, as you will for the exam. It is our belief that this will prepare more adequately for the exam and we hope to improve the overall "feel" of the course. 
+
+<h3> CPLEX </h3>
+In order to "just write down" the functions, we need to work with a particular format which is the "CPLEX". Its based on a more complicated engine that is used by big companies like IBM. R, of course, also provides a free alternative. The overal format is as follows.
+
+<p>--Start-File--</p>
+<p>Maximize</p>
+<p>&nbsp; obj: x1 + 2 x2 + 3 x3 + x4</p>
+<p>Subject To</p>
+<p>&nbsp; c1: - x1 + x2 + x3 + 10 x4 <= 20</p>
+<p>&nbsp; c2: x1 - 3 x2 + x3 <= 30</p>
+<p>&nbsp; c3: x2 - 3.5 x4 = 0</p>
+<p>Bounds</p>
+<p>&nbsp; 0 <= x1 <= 40</p>
+<p>&nbsp; 2 <= x4 <= 3</p>
+<p>General</p>
+<p>&nbsp; x4</p>
+<p>End</p>
+<p>--End-File--</p>
+
+This link provides a concrete guide for the use of this format:
+http://lpsolve.sourceforge.net/5.0/CPLEX-format.htm
+Note that this package also contains a free book from Fernandez that provide excellent examples for this method. The first template is provided on page 34. 
+
+<h3> Required Packages </h3>
+There are 3 packages required to run these linear programms
+
+<ul>
+<li>lpSolve</li>
+<li>lpSolveAPI</li>
+<li>Rglpk</il>
+</ul>
+
+So lets install those by executing the code below:
+```{r}
+install.packages("lpSolve")
+install.packages("lpSolveAPI")
+install.packages("Rglpk")
+```
+
+Having installed the requried packages, we can run the generic code for linear programming which is:
+```{r}
+library(lpSolveAPI)
+library(Rglpk)
+
+x <- Rglpk_read_file("example_lp", type = "CPLEX_LP", ignore_first_row = FALSE, verbose = FALSE)
+
+solve <- Rglpk_solve_LP(x$objective, x$constraints[[1]], x$constraints[[2]], x$constraints[[3]], x$bounds, x$types, x$maximum)
+```
+
+Here the CPLEX object is 1) imported into R, 2) An optimum is calculated and 3) the results are retrieved. 
+
+
+<h3> Sensitivity Report </h3>
+
+Tornado graph would be kewl too
