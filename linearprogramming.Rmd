@@ -59,3 +59,5 @@ Here the CPLEX object is 1) imported into R, 2) An optimum is calculated and 3) 
 <h3> Sensitivity Report </h3>
 
 Tornado graph would be kewl too
+
+To do: Sensitivity report, CPLEX formats for MOLP, ILP and big M methods, we need to test and formulate the ASCII issue
