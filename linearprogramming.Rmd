@@ -63,3 +63,5 @@ In order to undestand the code above, I want to elaborate on what an API is. An 
 There are alot of concrete examples of how to write Linear Programs in CPLEX in the book that is also added to this zip file. The book is called "Linear Programming.pdf" There 
 
 To do:  Are there a couple of formats that we can steal from the book to cover the MOLP, ILP and LP principles? Maybe even Big M and stuff. 
+
+example2_lp added
