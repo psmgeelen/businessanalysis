@@ -1,0 +1,47 @@
+GLPK 4.47 - SENSITIVITY ANALYSIS REPORT                                                                         Page   1
+
+Problem:    
+Objective:  cost = 48666.66667 (MINimum)
+
+   No. Row name     St      Activity         Slack   Lower bound       Activity      Obj coef  Obj value at Limiting
+                                          Marginal   Upper bound          range         range   break point variable
+------ ------------ -- ------------- ------------- -------------  ------------- ------------- ------------- ------------
+     1 seats        BS    -611.11111    1111.11111          -Inf     -400.00000     -12.00000   56000.00000 backs
+                                            .          500.00000    -3500.00000       6.00000   45000.00000 legs
+
+     2 legs         NU     200.00000        .               -Inf    -5000.00000          -Inf   66000.00000 x3p
+                                          -3.33333     200.00000     2200.00000       3.33333   42000.00000 seats
+
+     3 backs        NU     100.00000        .               -Inf     -280.00000          -Inf   51200.00000 decision
+                                          -6.66667     100.00000      620.00000       6.66667   45200.00000 x3p
+
+     4 dem          NL    1000.00000        .         1000.00000      133.33333     -50.00000    5333.33333 x3p
+                                          50.00000          +Inf     1000.00000          +Inf   48666.66667 dec3
+
+     5 dec3         BS        .             .               -Inf      577.77778        .        48666.66667 dec4
+                                            .             .              .               +Inf   48666.66667
+
+     6 dec4         NU    1000.00000        .               -Inf     1000.00000          -Inf   48666.66667 dec3
+                                            .         1000.00000     1422.22222        .        48666.66667 decision
+
+GLPK 4.47 - SENSITIVITY ANALYSIS REPORT                                                                         Page   2
+
+Problem:    
+Objective:  cost = 48666.66667 (MINimum)
+
+   No. Column name  St      Activity      Obj coef   Lower bound       Activity      Obj coef  Obj value at Limiting
+                                          Marginal   Upper bound          range         range   break point variable
+------ ------------ -- ------------- ------------- -------------  ------------- ------------- ------------- ------------
+     1 xwood        BS     161.11111      80.00000        .           450.00000      20.00000   39000.00000 legs
+                                            .               +Inf      140.00000     200.00000   68000.00000 backs
+
+     2 x4p          BS     422.22222      30.00000        .          1000.00000        .        36000.00000 legs
+                                            .               +Inf         .           36.00000   51200.00000 backs
+
+     3 x3p          BS     577.77778      40.00000        .          1000.00000      34.00000   45200.00000 backs
+                                            .               +Inf         .           70.00000   66000.00000 legs
+
+     4 decision     BS        .57778        .             .             1.00000   -6000.00000   45200.00000 backs
+                                            .            1.00000         .57778        .        48666.66667 dec4
+
+End of report

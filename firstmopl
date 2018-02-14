@@ -1,0 +1,16 @@
+Minimize
+Q
+
+Subject To
+higcoal : 12x1 + 4x2 >= 48
+medcoal: 4x1 + 4x2 >= 28
+lowcoal: 10x1 + 20x2 >= 100
+
+MINIMAX1: (40x1 + 32x2 - 244) / 244 <= Q
+MINIMAX2: (800x1 + 1250x2 - 6950) / 6950 <= Q
+MINIMAX2: (800x1 + 1250x2 - 6950) / 6950 <= Q
+MINIMAX3: (0.2x1 + 0.45x2 - 2) / 2 <= Q
+x1 >= 0
+x2 >= 0
+
+End

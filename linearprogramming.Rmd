@@ -3,7 +3,7 @@ title: "Linear Programming 2.0"
 output: html_notebook
 ---
 
-This notebook with give you a start in Linear Programming in R. Arseny and I have been working many hours to develop a workflow by which you can truly write down the functions and constraints, as you will for the exam. It is our belief that this will prepare more adequately for the exam and we hope to improve the overall "feel" of the course. 
+This notebook will give you an intro to Linear Programming in R. Our aim here is to let you write down the functions and constraints in the same form as inthe exam. Enjoy :)
 <p></p><p></p>
 <h3> CPLEX </h3>
 In order to "just write down" the functions, we need to work with a particular format which is the "CPLEX". Its based on a more complicated engine that is used by big companies like IBM. R, of course, also provides a free alternative. The overal format is as follows.
@@ -16,7 +16,7 @@ Note that this package also contains a free book from Fernandez that provide exc
 
 <h4> Workflow CPLEX </h4>
 
-The CPLEX format is based on ASCII coding. This coding is relates to how a file is stored. The workflow of creating a CPLEX file is a follows. You can create a new file in RStudio by clicking on the new file button. This will open a menu, select txt file. 
+The CPLEX format is based on ASCII file encoding. The workflow of creating a CPLEX file is a follows. You can create a new CPLEX file in RStudio is: click on the new file button. This will open a menu, select txt file. 
 ![](figures/openfile.png)
 
 When everything has been entered in the correct CPLEX format, you can save the file by going on the menubar and clicking on the file button. 
@@ -60,8 +60,39 @@ In order to undestand the code above, I want to elaborate on what an API is. An 
 
 <h3> Examples </h3>
 
-There are alot of concrete examples of how to write Linear Programs in CPLEX in the book that is also added to this zip file. The book is called "Linear Programming.pdf" There 
+There are examples of how to write Linear Programs in CPLEX in the book that is also added to this zip file. The book is called "Linear Programming.pdf".
 
-To do:  Are there a couple of formats that we can steal from the book to cover the MOLP, ILP and LP principles? Maybe even Big M and stuff. 
 
-example2_lp added
+<h4>Integer linear program: Two models of chairs.</h4>
+
+The problem is described on p.57 of the book.
+We have two models, in the first  we use integer variables, in the second binary integer variables.
+We created furnituretypes_first and furnituretypes_second, check out the models within!
+
+```{r Chairs example}
+#having made the files, load them into GLPK
+
+#first, create an object which is a GLPK problem
+chairsprob1<-initProbGLPK(ptrtype = "glpk_prob")
+
+#this function reads a file and puts it into the object we created
+readLPGLPK(chairsprob1,"furnituretypes_first")
+
+#just solves the problem
+solveSimplexGLPK(chairsprob1)
+
+#prints ranges from a problem object into a file
+printRangesGLPK(chairsprob1, fname = "chairs1.txt")
+
+#shows the file
+file.show("chairs1.txt")
+
+#same for the second chairs problem.
+
+chairsprob2<-initProbGLPK(ptrtype = "glpk_prob")
+readLPGLPK(chairsprob2,"furnituretypes_second")
+solveSimplexGLPK(chairsprob2)
+printRangesGLPK(chairsprob2, fname = "chairs2.txt")
+file.show("chairs2.txt")
+```
+
