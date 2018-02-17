@@ -1,0 +1,28 @@
+Minimize
+ obj: 5dm1 + 10dm2 + 15dm3 + 25000dm4 + 25000dp4 + 1000000dp5
+Subject To
+
+ smallr: X1 + dm1 - dp1 = 5
+ mediumr: X2 + dm2 - dp2 = 10
+ larger: X3 + dm3 -dp3 = 15
+ squaref: 400X1 + 750X2 + 1050X3 + dm4 - dp4 = 25000
+ buildc: 18000X1 + 33000X2 + 45150X3 + dm5 - dp5 = 1000000
+ 
+ 
+ 
+ X1>=0
+ X2>=0
+ X3>=0
+ dm1>=0
+ dp1>=0
+ dm2>=0
+ dp2>=0
+ dm3>=0
+ dp3>=0
+ 
+Integer
+X1
+X2
+X3
+
+End

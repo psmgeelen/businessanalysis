@@ -18,6 +18,15 @@ Objective:  cost = 48666.66667 (MINimum)
      4 dem          NL    1000.00000        .         1000.00000      133.33333     -50.00000    5333.33333 x3p
                                           50.00000          +Inf           +Inf          +Inf          +Inf
 
+     5 r.11         BS     161.11111    -161.11111        .           450.00000     -60.00000   39000.00000 legs
+                                            .               +Inf      140.00000     120.00000   68000.00000 backs
+
+     6 r.12         BS        .             .             .                +Inf        .        48666.66667 p
+                                            .               +Inf         .               +Inf   48666.66667
+
+     7 r.13         BS        .             .             .                +Inf        .        48666.66667 p
+                                            .               +Inf         .               +Inf   48666.66667
+
 GLPK 4.47 - SENSITIVITY ANALYSIS REPORT                                                                         Page   2
 
 Problem:    
@@ -34,5 +43,8 @@ Objective:  cost = 48666.66667 (MINimum)
 
      3 x3p          BS     577.77778      40.00000        .          1000.00000      34.00000   45200.00000 backs
                                             .               +Inf           -Inf      70.00000   66000.00000 legs
+
+     4 p            NL        .             .             .              .             .        48666.66667 r.12
+                                            .               +Inf           +Inf          +Inf   48666.66667
 
 End of report

@@ -96,3 +96,15 @@ printRangesGLPK(chairsprob2, fname = "chairs2.txt")
 file.show("chairs2.txt")
 ```
 
+
+```{r}
+golp<-initProbGLPK(ptrtype = "glpk_prob")
+
+readLPGLPK(golp,"GOLP")
+
+solveSimplexGLPK(golp)
+
+printRangesGLPK(golp,fname="golp.txt")
+file.show("golp.txt")
+```
+

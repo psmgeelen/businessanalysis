@@ -8,9 +8,13 @@ legs : 4x4p + 3x3p - 20 xwood <= 200
 backs : x4p - 2 xwood <= 100
 dem : x4p + x3p >= 1000
 
+xwood >=0
+4p >= 0
+3p >= 0
 Integer
 x3p
 x4p
 xwood
+
 
 End
