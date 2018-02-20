@@ -98,13 +98,16 @@ file.show("chairs2.txt")
 
 
 ```{r}
-golp<-initProbGLPK(ptrtype = "glpk_prob")
+library(glpkAPI)
+library(Rglpk)
 
-readLPGLPK(golp,"GOLP")
+minmax<-initProbGLPK(ptrtype = "glpk_prob")
 
-solveSimplexGLPK(golp)
+readLPGLPK(minmax,"minimax")
 
-printRangesGLPK(golp,fname="golp.txt")
-file.show("golp.txt")
+solveSimplexGLPK(minmax)
+
+printRangesGLPK(golp,fname="sminmax.txt")
+
 ```
 

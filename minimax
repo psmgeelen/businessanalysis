@@ -1,0 +1,22 @@
+Minimize
+ obj: xa
+Subject To
+
+ high: 12X1 + 4X2 >= 48
+ med: 4X1 + 4X2 >= 28
+ low: 10X1 + 20X2 >= 100
+ GOAL1: 40X1 + 32X2 - 244 <= Q1
+ GOAL2: 800X1 + 1250X2 - 6950 <= Q2
+ GOAL3: 0.2X1 + 0.45X2 - 2 <= Q3
+ 
+ 
+ Bounds
+ X1>=0
+ X2>=0
+ Q1<=xa
+ Q2<=xa
+ Q3<=xa
+ xa>=0
+
+End
+
