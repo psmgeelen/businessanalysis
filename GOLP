@@ -1,5 +1,5 @@
 Minimize
- obj: 1/5dm1 + 1/10dm2 + 1/15dm3 + 1/25000dm4 + 1/25000dp4 + 1/1000000dp5
+ obj: 1/5dm1 + 1/10dm2 + 1/15dm3 + 0.00004dm4 + 1/25000dp4 + 1/1000000dp5
 Subject To
 
  smallr: X1 + dm1 - dp1 = 5

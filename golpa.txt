@@ -1,0 +1,132 @@
+GLPK 4.47 - SENSITIVITY ANALYSIS REPORT                                                                         Page   1
+
+Problem:    
+Objective:  obj = 0 (MINimum)
+
+   No. Row name     St      Activity         Slack   Lower bound       Activity      Obj coef  Obj value at Limiting
+                                          Marginal   Upper bound          range         range   break point variable
+------ ------------ -- ------------- ------------- -------------  ------------- ------------- ------------- ------------
+     1 smallr       NS       5.00000        .            5.00000         .               -Inf        .      dm1
+                                            .            5.00000           +Inf          +Inf        .     
+
+     2 mediumr      NS      10.00000        .           10.00000         .               -Inf        .      dm2
+                                            .           10.00000           +Inf          +Inf        .     
+
+     3 larger       NS      15.00000        .           15.00000           -Inf          -Inf        .     
+                                            .           15.00000       22.14839          +Inf        .      dp3
+
+     4 squaref      NS   25000.00000        .        25000.00000    23255.81395          -Inf        .      dm4
+                                            .        25000.00000           +Inf          +Inf        .     
+
+     5 buildc       NS        1e+006        .             1e+006   677250.00000          -Inf        .      dp3
+                                            .             1e+006     1.075e+006          +Inf        .      dm4
+
+     6 r.13         BS        .             .             .             5.00000        .             .      X1
+                                            .               +Inf         .               +Inf        .     
+
+     7 r.14         BS        .             .             .             9.78030        .             .      X2
+                                            .               +Inf         .               +Inf        .     
+
+     8 r.15         BS      22.14839     -22.14839        .            23.80952        .             .      dp5
+                                            .               +Inf       15.00000        .             .      X2
+
+     9 r.16         BS       5.00000      -5.00000        .                +Inf        .             .      dp1
+                                            .               +Inf         .             .             .      X1
+
+    10 r.17         BS        .             .             .                +Inf        .             .      dp1
+                                            .               +Inf         .               +Inf        .     
+
+GLPK 4.47 - SENSITIVITY ANALYSIS REPORT                                                                         Page   2
+
+Problem:    
+Objective:  obj = 0 (MINimum)
+
+   No. Row name     St      Activity         Slack   Lower bound       Activity      Obj coef  Obj value at Limiting
+                                          Marginal   Upper bound          range         range   break point variable
+------ ------------ -- ------------- ------------- -------------  ------------- ------------- ------------- ------------
+    11 r.18         BS      10.00000     -10.00000        .                +Inf        .             .      dp2
+                                            .               +Inf         .21970        .             .      X2
+
+    12 r.19         BS        .             .             .                +Inf        .             .      dp2
+                                            .               +Inf         .               +Inf        .     
+
+    13 r.20         BS        .             .             .                +Inf        .             .      dm3
+                                            .               +Inf         .               +Inf        .     
+
+    14 r.21         BS       7.14839      -7.14839        .                +Inf        .             .      dm3
+                                            .               +Inf         .             .             .      X2
+
+GLPK 4.47 - SENSITIVITY ANALYSIS REPORT                                                                         Page   3
+
+Problem:    
+Objective:  obj = 0 (MINimum)
+
+   No. Column name  St      Activity      Obj coef   Lower bound       Activity      Obj coef  Obj value at Limiting
+                                          Marginal   Upper bound          range         range   break point variable
+------ ------------ -- ------------- ------------- -------------  ------------- ------------- ------------- ------------
+     1 /5dm1        NL        .            1.00000        .                -Inf        .               -Inf
+                                           1.00000          +Inf           +Inf          +Inf          +Inf
+
+     2 /10dm2       NL        .            1.00000        .                -Inf        .               -Inf
+                                           1.00000          +Inf           +Inf          +Inf          +Inf
+
+     3 /15dm3       NL        .            1.00000        .                -Inf        .               -Inf
+                                           1.00000          +Inf           +Inf          +Inf          +Inf
+
+     4 /25000dm4    NL        .            1.00000        .                -Inf        .               -Inf
+                                           1.00000          +Inf           +Inf          +Inf          +Inf
+
+     5 /25000dp4    NL        .            1.00000        .                -Inf        .               -Inf
+                                           1.00000          +Inf           +Inf          +Inf          +Inf
+
+     6 /1000000dp5  NL        .            1.00000        .                -Inf        .               -Inf
+                                           1.00000          +Inf           +Inf          +Inf          +Inf
+
+     7 X1           NL        .             .             .              .             .             .      r.13
+                                            .               +Inf        5.00000          +Inf        .      dm1
+
+     8 dm1          BS       5.00000        .             .                +Inf        .             .      dp1
+                                            .               +Inf         .             .             .      X1
+
+     9 dp1          NL        .             .             .              .             .             .      r.17
+                                            .               +Inf           +Inf          +Inf        .     
+
+    10 X2           NL        .             .             .              .             .             .      r.14
+                                            .               +Inf        9.78030          +Inf        .      dp3
+
+GLPK 4.47 - SENSITIVITY ANALYSIS REPORT                                                                         Page   4
+
+Problem:    
+Objective:  obj = 0 (MINimum)
+
+   No. Column name  St      Activity      Obj coef   Lower bound       Activity      Obj coef  Obj value at Limiting
+                                          Marginal   Upper bound          range         range   break point variable
+------ ------------ -- ------------- ------------- -------------  ------------- ------------- ------------- ------------
+    11 dm2          BS      10.00000        .             .                +Inf        .             .      dp2
+                                            .               +Inf         .21970        .             .      X2
+
+    12 dp2          NL        .             .             .              .             .             .      r.19
+                                            .               +Inf           +Inf          +Inf        .     
+
+    13 X3           BS      22.14839        .             .            23.80952        .             .      dp5
+                                            .               +Inf       15.00000        .             .      X2
+
+    14 dm3          NL        .             .             .              .             .             .      r.20
+                                            .               +Inf           +Inf          +Inf        .     
+
+    15 dp3          BS       7.14839        .             .                +Inf        .             .      dm3
+                                            .               +Inf         .             .             .      X2
+
+    16 dm4          BS    1744.18605        .             .          1837.20930        .             .      X1
+                                            .               +Inf           -Inf        .             .      dp5
+
+    17 dp4          NL        .             .             .         -1744.18605        .             .      dm4
+                                            .               +Inf           +Inf          +Inf        .     
+
+    18 dm5          NL        .             .             .        -75000.00000        .             .      dm4
+                                            .               +Inf   322750.00000          +Inf        .      dp3
+
+    19 dp5          NL        .             .             .       -322750.00000        .             .      dp3
+                                            .               +Inf    75000.00000          +Inf        .      dm4
+
+End of report
