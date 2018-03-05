@@ -1,0 +1,91 @@
+---
+title: "The Simulacrum"
+output: html_notebook
+---
+
+
+
+queueing really.
+
+CH13 of [RA]
+
+Excercises: 13.13, 13.16
+Cases: 13.1, 13.2
+
+<h4>Variables of a q system:</h4>
+
+lambda - arrival rate (units/time period) <br>
+mu - service rate (units/time period, per server) <br>
+s, or c - number of servers<br>
+
+
+
+<h4>Parameters of a queueing system that we need:</h4>
+<ul>
+<li>U - utilization factor</li>
+<li>P0 - probability that system is empty</li>
+<li>L_q - average number in line</li>
+<li>L - average number in system</li>
+<li>W_q - average time in line</li>
+<li>W average time in system</li>
+<li>P_w - probability of having to wait in line</li>
+<li>P_n - probability of n units in the system</li>
+</ul>
+
+<h4> Implementation with R </h4>
+
+```{r}
+#we use the simmer package, first install it.
+install.packages("simmer")
+install.packages("simmer.plot")
+```
+
+
+
+```{r}
+
+library(simmer)
+
+lambda <- 5
+mu <- 4
+c<-2
+rho <- lambda/mu
+rho_c <- lambda/(c*mu) # = 5/8
+
+mmc.trajectory <- trajectory() %>%
+  seize("resource", amount=1) %>%
+  timeout(function() rexp(1, mu)) %>%
+  release("resource", amount=1)
+
+mmc.env <- simmer() %>%
+  add_resource("resource", capacity=2, queue_size=Inf) %>%
+  add_generator("arrival", mmc.trajectory, function() rexp(1, lambda)) %>% 
+  run(until=2000)
+
+```
+
+
+
+```{r}
+library(simmer.plot)
+# Theoretical values
+ind <- 0:(c-1)
+
+pi_0 <-1/(sum(rho**ind/factorial(ind)) + (rho**c/factorial(c))*(1/(1-rho/c)))
+mmc.L <- rho +  ((rho**c/factorial(c))*pi_0)*((rho/c)/((1-rho/c)**2))
+mmc.Lq <- mmc.L - rho
+
+# Evolution of the average number of customers in the system
+plot(mmc.env, "resources", "usage", "resource", items="system") +
+  geom_hline(yintercept=mmc.L) + ylim(0, 3)
+```
+
+```{r}
+mmc.arrivals <- get_mon_arrivals(mmc.env)
+mmc.t_system <- mmc.arrivals$end_time - mmc.arrivals$start_time
+lambda_eff<-lambda
+mmc.W <- mmc.L / lambda_eff
+mmc.W ; mean(mmc.t_system)
+
+```
+
