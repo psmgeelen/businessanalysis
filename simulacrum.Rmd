@@ -46,9 +46,9 @@ install.packages("simmer.plot")
 
 library(simmer)
 
-lambda <- 5
-mu <- 4
-c<-2
+lambda <- 13
+mu <- 6
+c<- 2
 rho <- lambda/mu
 rho_c <- lambda/(c*mu) # = 5/8
 
@@ -77,7 +77,7 @@ mmc.Lq <- mmc.L - rho
 
 # Evolution of the average number of customers in the system
 plot(mmc.env, "resources", "usage", "resource", items="system") +
-  geom_hline(yintercept=mmc.L) + ylim(0, 3)
+  geom_hline(yintercept=mmc.L) #+ ylim(0, 15)
 ```
 
 ```{r}
