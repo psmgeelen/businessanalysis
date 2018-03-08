@@ -16,13 +16,13 @@ Cases: 13.1, 13.2
 
 lambda - arrival rate (units/time period) <br>
 mu - service rate (units/time period, per server) <br>
-s, or c - number of servers<br>
+s, or c in our examples - number of servers<br>
 
 
 
 <h4>Parameters of a queueing system that we need:</h4>
 <ul>
-<li>U - utilization factor</li>
+<li>U - utilization factor. denoted as rho below</li>
 <li>P0 - probability that system is empty</li>
 <li>L_q - average number in line</li>
 <li>L - average number in system</li>
@@ -35,57 +35,105 @@ s, or c - number of servers<br>
 <h4> Implementation with R </h4>
 
 ```{r}
-#we use the simmer package, first install it.
-install.packages("simmer")
-install.packages("simmer.plot")
+#we use the simmer package, first install it.it also has a separate plotting package, get it too. :) (un-comment the commands first!) 
+#install.packages("simmer")
+#install.packages("simmer.plot")
 ```
 
 
 
 ```{r}
-
+#setting up the environment
 library(simmer)
 
-lambda <- 13
+#the basic parameters for a M/M/c system
+lambda <- 11
 mu <- 6
 c<- 2
 rho <- lambda/mu
-rho_c <- lambda/(c*mu) # = 5/8
+rho_c <- lambda/(c*mu) 
 
+#set up the function that the servers use
 mmc.trajectory <- trajectory() %>%
   seize("resource", amount=1) %>%
   timeout(function() rexp(1, mu)) %>%
   release("resource", amount=1)
-
+#set up the environment with the arrival / server fuctions
+#as you see exponential distributions around mu and lambda are chosen
 mmc.env <- simmer() %>%
+  #note that you can input the queue length here. right now set to infinite.
   add_resource("resource", capacity=2, queue_size=Inf) %>%
   add_generator("arrival", mmc.trajectory, function() rexp(1, lambda)) %>% 
   run(until=2000)
 
 ```
 
-
+System stats: 
 
 ```{r}
 library(simmer.plot)
 # Theoretical values
 ind <- 0:(c-1)
-
+#probability of empty
 pi_0 <-1/(sum(rho**ind/factorial(ind)) + (rho**c/factorial(c))*(1/(1-rho/c)))
+#average number in system
 mmc.L <- rho +  ((rho**c/factorial(c))*pi_0)*((rho/c)/((1-rho/c)**2))
+#average number in queue
 mmc.Lq <- mmc.L - rho
 
 # Evolution of the average number of customers in the system
 plot(mmc.env, "resources", "usage", "resource", items="system") +
   geom_hline(yintercept=mmc.L) #+ ylim(0, 15)
+
+#same but in queue
+plot(mmc.env, "resources", "usage", "resource", items="queue") +
+  geom_hline(yintercept=mmc.L) #+ ylim(0, 15)
+
+#same but for how many servers are used
+plot(mmc.env, "resources", "usage", "resource", items="server") +
+  geom_hline(yintercept=mmc.L) #+ ylim(0, 15)
+#you can play with the Y-axis of the chart by removing the comment sign before + ylim(..). If your graph area becomes to small, the line will get broken + error messages. :)
+
 ```
+
+
+Average waiting time and avg time in system:
 
 ```{r}
 mmc.arrivals <- get_mon_arrivals(mmc.env)
+#avg time in system
 mmc.t_system <- mmc.arrivals$end_time - mmc.arrivals$start_time
 lambda_eff<-lambda
+#avg wait time
 mmc.W <- mmc.L / lambda_eff
 mmc.W ; mean(mmc.t_system)
 
+
+```
+
+We are still missing the probabilities (of n units in system etc.)
+
+```{r}
+#probability of having to wait in line (of line being non-zero?)
+p_w <- 1/factorial(c)*(lambda/mu)^c*(c*mu/(c*mu-lambda))*pi_0
+
+#probability of n units in the system. set nunits to your value
+nunits <- 2
+p_n <- ((lambda/mu)^nunits)/factorial(nunits)*pi_0
+#if n>s, another formula applies. Mind not to run the whole code chunk, but the individual lines. otherwise you'll only get the second result ^_^
+nunitsm <- 10
+p_n <- ((lambda/mu)^nunitsm)/(c*factorial(c)^(nunitsm-c))*pi_0
+pndf <- data.frame()
+```
+
+
+
+
+What about visualization?
+
+```{r}
+#plot the average waiting time for arrivals!
+#remember we put the arrival times into the mmc.arrivals object with the get_mon_arrivals function?
+plot(mmc.arrivals,metric="waiting_time")
 ```
 
