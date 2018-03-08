@@ -1,6 +1,8 @@
 ---
 title: "Simulations"
-output: html_notebook
+output:
+  word_document: default
+  html_notebook: default
 ---
 
 <p>In this notebook we are going to discuss the methods for simulation that can be conducted in R. Simulations are scenario's, by which to test the sensitivity of a system. More simply put, understanding a system, sometimes requires to run several scenario's. Doing this is in methodological sound way, is referred to as a set of simulations. </p>
