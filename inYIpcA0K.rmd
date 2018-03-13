@@ -39,7 +39,6 @@ s, or c in our examples - number of servers<br>
 #install.packages("simmer")
 #install.packages("simmer.plot")
 rm(list=ls())
-
 ```
 
 <h2> A M/M/c system with unlimited queue / clients </h2>
@@ -49,9 +48,9 @@ rm(list=ls())
 library(simmer)
 
 #the basic parameters for a M/M/c system
-lambda <- 60
-mu <- 24
-c<- 3
+lambda <- 11
+mu <- 6
+c<- 2
 rho <- lambda/mu
 #total utilization with multiple servers
 rho_c <- lambda/(c*mu) 
@@ -67,7 +66,7 @@ mmc.env <- simmer() %>%
   #note that you can input the queue length here. right now set to infinite.
   add_resource("resource", capacity=c, queue_size=Inf) %>%
   add_generator("arrival", mmc.trajectory, function() rexp(1, lambda)) %>% 
-  run(until=200)
+  run(until=2000)
 
 ```
 
@@ -114,7 +113,7 @@ p_w <- 1/factorial(c)*(lambda/mu)^c*(c*mu/(c*mu-lambda))*pi_0
 nunits <- 2
 p_n <- ((lambda/mu)^nunits)/factorial(nunits)*pi_0
 #if n>s, another formula applies. Mind not to run the whole code chunk, but the individual lines. otherwise you'll only get the second result ^_^
-nunitsm <- 1:100
+nunitsm <- 1:10
 p_n <- ((lambda/mu)^nunitsm)/(c*factorial(c)^(nunitsm-c))*pi_0
 
 #we can plot the probabilities of a number of units in the system (or in queue). We have two formulas, so we need a loop. Ugly solution below
