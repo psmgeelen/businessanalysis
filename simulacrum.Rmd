@@ -38,6 +38,7 @@ s, or c in our examples - number of servers<br>
 #we use the simmer package, first install it.it also has a separate plotting package, get it too. :) (un-comment the commands first!) 
 #install.packages("simmer")
 #install.packages("simmer.plot")
+rm(list=ls())
 ```
 
 <h2> A M/M/c system with unlimited queue / clients </h2>
@@ -49,8 +50,9 @@ library(simmer)
 #the basic parameters for a M/M/c system
 lambda <- 11
 mu <- 6
-c<- 5
+c<- 2
 rho <- lambda/mu
+#total utilization with multiple servers
 rho_c <- lambda/(c*mu) 
 
 #set up the function that the servers use
@@ -62,7 +64,7 @@ mmc.trajectory <- trajectory() %>%
 #as you see exponential distributions around mu and lambda are chosen
 mmc.env <- simmer() %>%
   #note that you can input the queue length here. right now set to infinite.
-  add_resource("resource", capacity=2, queue_size=Inf) %>%
+  add_resource("resource", capacity=c, queue_size=Inf) %>%
   add_generator("arrival", mmc.trajectory, function() rexp(1, lambda)) %>% 
   run(until=2000)
 
@@ -132,7 +134,7 @@ What about visualization?
 
 ```{r}
 #a barplot of probabilities of n units in system
-barplot(probabilities_units$V2)
+barplot(probabilities_units$V2,main="probability of n units in system")
 
 # Evolution of the average number of customers in the system
 plot(mmc.env, "resources", "usage", "resource", items="system") +
@@ -201,7 +203,7 @@ mmc.trajectory <- trajectory() %>%
 mmc.env <- simmer() %>%
   # --- -- -- - -- - - -- - -- 
   #note that you can input the queue length here. right now set to a set length!.
-  add_resource("resource", capacity=2, queue_size=k) %>%
+  add_resource("resource", capacity=c, queue_size=k) %>%
   add_generator("arrival", mmc.trajectory, function() rexp(1, lambda)) %>% 
   run(until=2000)
 
@@ -242,7 +244,7 @@ probabilities_units$V2[probabilities_units$nunitsm > k] <- 0
 #average number in queue
 mmc.Lq <- (pi_0*rho^c*rho_c)/(factorial(c)*(1-rho_c)^2)*(1-rho_c^(k-c)-(k-c)*rho_c^(k-c)*(1-rho_c))
 #average number in system
-mmc.L <- sum(ind3*probabilities_units$V2[probabilities_units$nunitsm==ind3]+mmc.Lq+c(1-sum(probabilities_units$V2[probabilities_units$nunitsm==ind3])))
+mmc.L <- sum(ind3*probabilities_units$V2[probabilities_units$nunitsm==ind3])+mmc.Lq+c*(1-sum(probabilities_units$V2[probabilities_units$nunitsm==ind3]))
 
 
 
